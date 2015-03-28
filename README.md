@@ -2,6 +2,7 @@ justtheweather.github.io
 ========================
 
 An open source weather app.
+
 ========================
 The MIT License (MIT)
 
