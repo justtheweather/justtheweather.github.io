@@ -1,154 +1,352 @@
+<!-- created by Ben Fields, licensed under MIT. -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Just The Weather</title>
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-    html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+<head>
+  <title>Just the Weather</title>
+  <meta name="theme-color" content="#eceff1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="A simple location based weather map for the modern web. " >
+
+  
+  <style>
+  body{
+
+		font-family: 'Roboto', sans-serif;
+     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+  	font-size: 1em; 
+    font-weight: 300;
+		color: black;
+		text-align: center;
+		background-color: #ffffff;
+
 }
 
-#map-canvas, #map_canvas {
-  height: 100%;
-}
-
-@media print {
-  html, body {
-    height: auto;
-  }
-
-  #map-canvas, #map_canvas {
-    height: 650px;
-  }
-}
-
-#panel {
+.footer {
+  bottom: 0;
+  left: 0;
+  right: 0;
   position: absolute;
-  top: 5px;
-  left: 50%;
-  margin-left: -180px;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-}</style>
-    <script>
-    window.google = window.google || {};
-google.maps = google.maps || {};
-(function() {
-  
-  function getScript(src) {
-    document.write('<' + 'script src="' + src + '"' +
-                   ' type="text/javascript"><' + '/script>');
-  }
-  
-  var modules = google.maps.modules = {};
-  google.maps.__gjsload__ = function(name, text) {
-    modules[name] = text;
-  };
-  
-  google.maps.Load = function(apiLoad) {
-    delete google.maps.Load;
-    apiLoad([0.009999999776482582,[[["https://mts0.googleapis.com/vt?lyrs=m@231000000\u0026src=api\u0026hl=en-US\u0026","https://mts1.googleapis.com/vt?lyrs=m@231000000\u0026src=api\u0026hl=en-US\u0026"],null,null,null,null,"m@231000000"],[["https://khms0.googleapis.com/kh?v=137\u0026hl=en-US\u0026","https://khms1.googleapis.com/kh?v=137\u0026hl=en-US\u0026"],null,null,null,1,"137"],[["https://mts0.googleapis.com/vt?lyrs=h@231000000\u0026src=api\u0026hl=en-US\u0026","https://mts1.googleapis.com/vt?lyrs=h@231000000\u0026src=api\u0026hl=en-US\u0026"],null,null,null,null,"h@231000000"],[["https://mts0.googleapis.com/vt?lyrs=t@131,r@231000000\u0026src=api\u0026hl=en-US\u0026","https://mts1.googleapis.com/vt?lyrs=t@131,r@231000000\u0026src=api\u0026hl=en-US\u0026"],null,null,null,null,"t@131,r@231000000"],null,null,[["https://cbks0.googleapis.com/cbk?","https://cbks1.googleapis.com/cbk?"]],[["https://khms0.googleapis.com/kh?v=81\u0026hl=en-US\u0026","https://khms1.googleapis.com/kh?v=81\u0026hl=en-US\u0026"],null,null,null,null,"81"],[["https://mts0.googleapis.com/mapslt?hl=en-US\u0026","https://mts1.googleapis.com/mapslt?hl=en-US\u0026"]],[["https://mts0.googleapis.com/mapslt/ft?hl=en-US\u0026","https://mts1.googleapis.com/mapslt/ft?hl=en-US\u0026"]],[["https://mts0.googleapis.com/vt?hl=en-US\u0026","https://mts1.googleapis.com/vt?hl=en-US\u0026"]],[["https://mts0.googleapis.com/mapslt/loom?hl=en-US\u0026","https://mts1.googleapis.com/mapslt/loom?hl=en-US\u0026"]],[["https://mts0.googleapis.com/mapslt?hl=en-US\u0026","https://mts1.googleapis.com/mapslt?hl=en-US\u0026"]],[["https://mts0.googleapis.com/mapslt/ft?hl=en-US\u0026","https://mts1.googleapis.com/mapslt/ft?hl=en-US\u0026"]]],["en-US","US",null,0,null,null,"https://maps.gstatic.com/mapfiles/","https://csi.gstatic.com","https://maps.googleapis.com","https://maps.googleapis.com"],["https://maps.gstatic.com/intl/en_us/mapfiles/api-3/14/3","3.14.3"],[2853384449],1,null,null,null,null,0,"",["weather"],null,1,"https://khms.googleapis.com/mz?v=137\u0026",null,"https://earthbuilder.googleapis.com","https://earthbuilder.googleapis.com",null,"https://mts.googleapis.com/vt/icon",[["https://mts0.googleapis.com/vt","https://mts1.googleapis.com/vt"],["https://mts0.googleapis.com/vt","https://mts1.googleapis.com/vt"],[null,[[0,"m",231000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[47],[37,[["smartmaps"]]]]],0],[null,[[0,"m",231000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[47],[37,[["smartmaps"]]]]],3],[null,[[0,"h",231000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[50],[37,[["smartmaps"]]]]],0],[null,[[0,"h",231000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[50],[37,[["smartmaps"]]]]],3],[null,[[4,"t",131],[0,"r",131000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[5],[37,[["smartmaps"]]]]],0],[null,[[4,"t",131],[0,"r",131000000]],[null,"en-US","US",null,18,null,null,null,null,null,null,[[5],[37,[["smartmaps"]]]]],3],[null,null,[null,"en-US","US",null,18],0],[null,null,[null,"en-US","US",null,18],3],[null,null,[null,"en-US","US",null,18],6],[null,null,[null,"en-US","US",null,18],0]]], loadScriptTime);
-  };
-  var loadScriptTime = (new Date).getTime();
-  getScript("https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/14/3/%7Bmain,weather%7D.js");
-})();</script>
-    <script>
-function initialize() {
-  var mapOptions = {
-    zoom: 5,
-    center: new google.maps.LatLng(48.507507,2.285156),
-    disableDefaultUI: true,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-  var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-
-  var weatherLayer = new google.maps.weather.WeatherLayer({
-    temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
-  });
-  weatherLayer.setMap(map);
-
-  var cloudLayer = new google.maps.weather.CloudLayer();
-  cloudLayer.setMap(map);
+  display: block;
+  background-color: #f2f2f2;
+  border-top: 1px solid #e4e4e4;
+  font-size: small;
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+/* some handy classes */
+a{
+    color: #999;
+}
+a:hover{
+    color: #FFC107;
+}
+.grey{
+  color: #999;
+}
+.is-center{
+  text-align: center;
+}
+.shadow{
+      -webkit-box-shadow: 0px 2px 5px -0px rgba(0,0,0,0.3);
+         -moz-box-shadow: 0px 2px 5px -0px rgba(0,0,0,0.3);
+              box-shadow: 0px 2px 5px -0px rgba(0,0,0,0.3);
+}
+.transition{
+   transition: all .5s cubic-bezier(.3, 0, 0, 1.3)
+}
 
-    </script>
-  </head>
-  <body>
-  <script>
+
+
+
+/* will try to integrate flickr api */
+#img{
+    background:url(http://kristenvonbargen.com/wp-content/uploads/2013/11/camp.jpg) center no-repeat;
+    height: 10em;
+}
+
+	
+#weather{
+		background-color: white;
+
+    font-family: 'Roboto', sans-serif;
+     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    font-size: 0.9em; 
+    font-weight: 400;
+		color: #333;
+		text-align: left;
+
+    padding: auto;
+    height: auto;
+		border-bottom: 0.1em solid #eee;
+
+    cursor: pointer;
+
+}
+
+
+	
+.content {
+  margin-left: auto;
+	margin-right: auto;
+	margin-top: 4em;
+
+	max-width: 25em;
+
+	background-color: white;
+
+	transition: all 0.5s;
+}
+
+
+#find-wrapper{
+  cursor: pointer;
+  color: #999;
+  padding-right: 2em;
+
+}
+
+#find-wrapper:hover{
+  color: #333;
+
+}
+
+
+
+
+/* RIPPLE */
+.ripplelink{
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.8em; 
+  font-weight: 400;
+  color: #999;
+
+
+  display:block;
+  text-align:right;
+  text-decoration:none;
+  position:relative;
+  overflow:hidden;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  z-index:0;
+
+  width: 100%;
+
+  letter-spacing: 0.1em;
+
+  padding: 1em;
+  padding-right: 2em;
+}
+
+
+.ink {
+  display: block;
+  position: absolute;
+  background:rgba(0, 0, 0, 0.1);
+  border-radius: 100%;
+  -webkit-transform:scale(0);
+     -moz-transform:scale(0);
+       -o-transform:scale(0);
+          transform:scale(0);
+}
+
+.animate {
+	-webkit-animation:ripple 0.65s linear;
+   -moz-animation:ripple 0.65s linear;
+    -ms-animation:ripple 0.65s linear;
+     -o-animation:ripple 0.65s linear;
+        animation:ripple 0.65s linear;
+}
+
+@-webkit-keyframes ripple {
+    100% {opacity: 0; -webkit-transform: scale(2.5);}
+}
+@-moz-keyframes ripple {
+    100% {opacity: 0; -moz-transform: scale(2.5);}
+}
+@-o-keyframes ripple {
+    100% {opacity: 0; -o-transform: scale(2.5);}
+}
+@keyframes ripple {
+    100% {opacity: 0; transform: scale(2.5);}
+}
+
+
+
+
+  </style>
+</head>
+<body>
+<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-42557789-5', 'justtheweather.github.io');
+  ga('create', 'UA-42557789-5', 'auto');
   ga('send', 'pageview');
 
 </script>
-<div id="fb-root"></div>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '602180379837072',
-          status     : true,
-          xfbml      : true
-        });
-      };
+<br>
+<h1>Just the Weather</h1> 
+<label style="color: grey;">Hover results for full forcast.</label>
+<div class="pure-g content shadow">
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/all.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
+     		<div class="pure-u-1">
+        		<div id="weather" class = "transition">
+          </div> 
+          
+     		</div>
+     <div class = "is-center ripplelink js-geolocation is-center" id = "find-wrapper">
+	       <p class = "find-text"> Find Me <i class="fa fa-map-marker"></i> </p>
+     </div>  
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/all.js#xfbml=1&appId=602180379837072";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <div class="dropdown">
-    <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" style="margin-left:1em;">Just The Weather <b class="caret"></b></a>
-    <ul class="dropdown-menu" style="margin:4em 1.8em;">
-    <li><a href="http://justtheweather.github.io/" style="font-size:1.3em;">Just The Weather</a></li>
-    <li class="divider"></li>
-    <li><a href="http://justthetraffic.github.io/" style="font-size:1.3em;">Just The Traffic</a></li>
-    <li class="divider"></li>
-    <li style="margin: 0em .5em;">
-      <div class="fb-like" data-href="http://justtheweather.github.io/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-  </ul>
-</div>
   </div>
-  
-  <!-- <ul class="nav navbar-nav navbar-right">
-         <li><a href="http://justthetraffic.github.io/" style="padding-right: 2em; padding-left: 2em;">Just The Traffic &raquo; </a></li>
-  </ul> -->
-      
-</nav>
+<div class="footer">
+<p>Created by Ben Fields. &copy; 2015.</p>
+</div>
 
-    <div id="map-canvas"></div>
-  </body>
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+	loadWeather('#',''); //@params location, woeid
+	setInterval(loadWeather, 60000000);
+
+	var findClicked = false;
+
+	/* Does your browser support geolocation? */
+	if ("geolocation" in navigator) {
+	  $('.js-geolocation').show(); 
+	} else {
+	  $('.js-geolocation').hide();
+	}
+	
+	/* Where in the world are you? */
+	$('.js-geolocation').on('click', function() {
+	
+		if(findClicked == false)
+		{
+			findClicked = true;
+			$('#find-wrapper').html('<p> Finding You <i class="fa fa-map-marker"></i> </p>');
+		
+				$('#weather').html("");
+				$('#weather').css('padding-top', '0em');
+				$('#weather').css('padding-bottom', '0em');
+				$('#weather').css('height', '0.1em');
+				$('#img').css('height', '20em');
+		
+		
+		
+			  navigator.geolocation.getCurrentPosition(function(position) 
+			  {
+			  	//load weather using your lat/lng 	coordinates
+			    loadWeather(position.coords.latitude+','+position.coords.longitude);    
+			  });
+		}
+	});
+
+
+
+	//thank you James Fleeting for this awesome API!
+	// Docs at http://simpleweatherjs.com
+	function loadWeather(location, woeid) {
+	  $.simpleWeather({
+	    location: location,
+	    woeid: woeid,
+	    unit: 'f',
+	    success: function(weather) {
+
+	      html = '<p>'+ weather.city+', '+weather.region+'</p>';
+	      html += '<h2> <i class="icon-'+ weather.code+'"></i> '
+              +  weather.temp+'&deg;'+weather.units.temp+'</h2>';
+	      html += '<p class="currently">'+weather.currently+'</p>';
+	     
+	 
+		 $('#weather').hover( 
+
+
+		 	function(){
+
+	  			$('#weather').css('height', '14em');
+	  			$('#img').css('height', '1em');
+	  			html = '<p>'+ weather.city+', '+weather.region+'</p>';
+
+	  			for(var i=0;i<weather.forecast.length;i++) {
+
+        			    html += '<p>'+ weather.forecast[i].day+ ' : <strong> ' + weather.forecast[i].high + '     </strong> <span class = "grey">' + weather.forecast[i].low + '</span> </p>';
+
+        				$("#weather").html(html);
+      			  }
+      		},
+
+
+      		function(){
+
+      			$('#weather').css('height', '8em');
+	  			$('#img').css('height', '10em');
+
+      			html = '<p>'+ weather.city+', '+weather.region+'</p>';
+	     	    html += '<h2> <i class="icon-'+ weather.code+'"></i> '+ weather.temp+'&deg;'+weather.units.temp+'</h2>';
+	            html += '<p class="currently">'+weather.currently+'</p>';
+	            $("#weather").html(html);
+
+
+      		});
+		  
+
+		  if(findClicked == true)
+		  {
+		  	 $('#find-wrapper').html('<p> Found You! <i class="fa fa-map-marker"></i> </p>');
+		  }
+
+		  $('#weather').css('padding', '2em');
+		  $('#weather').css('height', '8em');
+		  $('#img').css('height', '10em');
+	     	
+	     	setTimeout( function(){$("#weather").html(html);}, 200);
+	     
+	    },
+	    error: function(error) {
+	      $("#weather").html('<p>'+error+'</p>');
+	    }
+	  });
+	}
+
+
+
+	//ripple on click effect, big thanks to 440 design here on codepen for this
+  //check it out here  http://codepen.io/440design/pen/iEztk
+	$(function(){
+		var ink, d, x, y;
+	
+		$(".ripplelink").click(function(e){
+	
+	   		 if($(this).find(".ink").length === 0){
+	   		     $(this).prepend("<span class='ink'></span>");
+	   		 }
+	         
+	   		 ink = $(this).find(".ink");
+	   		 ink.removeClass("animate");
+	   	  
+	   		 if(!ink.height() && !ink.width()){
+	    	    d = Math.max($(this).outerWidth(), $(this).outerHeight());
+	    	    ink.css({height: d, width: d});
+	  	     }
+	     
+	  		 x = e.pageX - $(this).offset().left - ink.width()/2;
+	  		 y = e.pageY - $(this).offset().top - ink.height()/2;
+	     
+	   		 ink.css({top: y+'px', left: x+'px'}).addClass("animate");
+	
+			});
+		});
+	
+</script>
+</body>
 </html>
